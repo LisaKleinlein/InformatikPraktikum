@@ -34,6 +34,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Actor To Be Spawned")
-		TSubclassOf<AActor> ActorToBeSpawned;
+		TSubclassOf<AActor> ActorToSpawn;
+
 
 };

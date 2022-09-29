@@ -35,5 +35,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* VisualMesh;
 
+	UMaterial* StoredMaterial;
+
+	UMaterialInstanceDynamic* DynamicMaterialInst;
+
 
 };

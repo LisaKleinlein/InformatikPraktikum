@@ -7,6 +7,7 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 #include "TestActor.h"
+#include "Engine/World.h"
 
 // Sets default values
 ATestCharacter::ATestCharacter()
@@ -37,8 +38,7 @@ void ATestCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bEnableClickEvents = true;
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bEnableMouseOverEvents = true;
+
 }
 
 // Called every frame
@@ -54,6 +54,8 @@ void ATestCharacter::Tick(float DeltaTime)
 	FVector wLocation, wDirection;
 	float DistanceAboveGround = 180.0f;
 	FVector PlaneOrigin(0.0f, 0.0f, DistanceAboveGround);
+	FTransform SpawnLocAndRotation;
+	
 
 	//Getting mouse location in regard of the world location
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->DeprojectMousePositionToWorld(wLocation, wDirection);
@@ -62,20 +64,9 @@ void ATestCharacter::Tick(float DeltaTime)
 
 
 	//Spawn Actor
-	//SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	//GetWorld()->SpawnActor<ATestActor>(ActorToBeSpawned, ActorWorldLocation, FRotator::ZeroRotator, SpawnParams);
-	
-	
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATestActor::StaticClass(), FoundActors);
-	for (int i = 0; i < FoundActors.Num(); i++)
-	{
-		FoundActors[i]->SetActorLocation(ActorWorldLocation);
-		//Spawn Actor
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-		GetWorld()->SpawnActor<ATestActor>(ActorToBeSpawned, ActorWorldLocation, FRotator::ZeroRotator, SpawnParams);
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	GetWorld()->SpawnActor<ATestActor>(ActorWorldLocation, FRotator::ZeroRotator, SpawnParams);
 
-	}
 
 }
 
@@ -84,7 +75,5 @@ void ATestCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 }
 

@@ -19,28 +19,45 @@ ATestActor::ATestActor()
 	VisualMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	VisualMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube"));
-
+	//Get the Shape
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_SPhere"));
+	
+	
+	//Adds the Mesh and sets the physics of the object
 	if (CubeVisualAsset.Succeeded())
 	{
 		VisualMesh->SetStaticMesh(CubeVisualAsset.Object);
 		VisualMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+		VisualMesh->SetSimulatePhysics(true);
+		VisualMesh->WakeRigidBody();
+		//Slows the gravitational pull
+		VisualMesh->SetLinearDamping(20.0f);
+		
+
 	}
 
+	//Should get the Material
+	//static ConstructorHelpers::FObjectFinder<UMaterial> FoundMaterial(TEXT("/../Content/StarterContent/Particles/Materials/M_Fire_SubUV.uasset"));
+	
+	//Would be to set the Material
+	/*if (FoundMaterial.Succeeded())
+	{
+		StoredMaterial = FoundMaterial.Object;
+		VisualMesh->SetMaterial(0,StoredMaterial);
+
+	}*/
+	//DynamicMaterialInst = UMaterialInstanceDynamic::Create(StoredMaterial, VisualMesh);
+	//VisualMesh->SetMaterial(0, StoredMaterial);
+	
+	
 }
 
 // Called when the game starts or when spawned
 void ATestActor::BeginPlay()
 {
 	Super::BeginPlay();
-	FVector Location = GetActorLocation();
-	FRotator Rotation = GetActorRotation();
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	GetWorld()->SpawnActor<AActor>(ActorToSpawn, Location, Rotation, SpawnParams);
-	
-
-	//GetWorld()->SpawnActor<AActor>(ActorToSpawn, Location, Rotation);
+	SetLifeSpan(10);
+	//VisualMesh->AddForce(FVector(0.f, 0.f, -1.f) * 500.f);
 }
 
 // Called every frame
@@ -50,12 +67,6 @@ void ATestActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	
-
-
-	
-
-	
-
 }
 
 
