@@ -31,7 +31,10 @@ ATestActor::ATestActor()
 		VisualMesh->SetSimulatePhysics(true);
 		VisualMesh->WakeRigidBody();
 		//Slows the gravitational pull
-		VisualMesh->SetLinearDamping(20.0f);
+		//VisualMesh->SetLinearDamping(20.0f);
+		//
+		VisualMesh->SetEnableGravity(false);
+		VisualMesh->SetPhysicsLinearVelocity((FVector(0.f, 0.f, -1.f) * 50000.f));
 		
 
 	}
@@ -57,7 +60,6 @@ void ATestActor::BeginPlay()
 {
 	Super::BeginPlay();
 	SetLifeSpan(10);
-	//VisualMesh->AddForce(FVector(0.f, 0.f, -1.f) * 500.f);
 }
 
 // Called every frame
