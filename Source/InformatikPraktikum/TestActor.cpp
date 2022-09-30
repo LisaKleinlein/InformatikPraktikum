@@ -34,8 +34,7 @@ ATestActor::ATestActor()
 		//VisualMesh->SetLinearDamping(20.0f);
 		//
 		VisualMesh->SetEnableGravity(false);
-		VisualMesh->SetPhysicsLinearVelocity((FVector(0.f, 0.f, -1.f) * 50000.f));
-		
+		VisualMesh->SetPhysicsLinearVelocity((FVector(0.f, 0.f, -1.0f) * 50000.f));
 
 	}
 

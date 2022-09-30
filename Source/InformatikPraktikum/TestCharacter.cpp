@@ -66,6 +66,7 @@ void ATestCharacter::Tick(float DeltaTime)
 	//Spawn Actor
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 	GetWorld()->SpawnActor<ATestActor>(ActorWorldLocation, FRotator::ZeroRotator, SpawnParams);
+
 	
 
 }
